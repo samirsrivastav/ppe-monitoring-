@@ -1,105 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>PPE Monitoring Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PPE Dashboard</title>
 
-    <style>
-        body {
-            font-family: Arial;
-            margin: 0;
-            background: #0b1220;
-            color: white;
-        }
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        h1 {
-            text-align: center;
-            padding: 20px;
-            color: #38bdf8;
-        }
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
-        .container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
-
-        .card {
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
-            transition: 0.3s;
-        }
-
-        .card:hover {
-            transform: scale(1.03);
-        }
-
-        .site {
-            color: #38bdf8;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .risk-high {
-            color: red;
-            font-weight: bold;
-        }
-
-        .risk-low {
-            color: lightgreen;
-        }
-
-        .badge {
-            padding: 5px 10px;
-            border-radius: 5px;
-            background: #334155;
-            display: inline-block;
-            margin-top: 5px;
-        }
-
-        .header-bar {
-            background: #111827;
-            padding: 10px;
-            text-align: center;
-        }
-    </style>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+  </style>
 </head>
 
-<body>
+<body class="bg-gray-100">
 
-<div class="header-bar">
-    🦺 PPE Safety Monitoring System (Live Dashboard)
-</div>
+<div class="flex min-h-screen">
 
-<h1>Real-Time Violations</h1>
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-lg p-5">
+    <h1 class="text-2xl font-bold text-blue-600 mb-8">PPE Monitor</h1>
 
-<div class="container">
+    <nav class="space-y-4 text-gray-700">
+      <a href="#" class="block hover:text-blue-600">🏠 Dashboard</a>
+      <a href="#" class="block hover:text-blue-600">📷 Live Camera</a>
+      <a href="#" class="block hover:text-blue-600">📊 Reports</a>
+      <a href="#" class="block hover:text-blue-600">⚠ Alerts</a>
+      <a href="#" class="block hover:text-blue-600">⚙ Settings</a>
+    </nav>
+  </aside>
 
-{% for item in data %}
+  <!-- Main Content -->
+  <main class="flex-1 p-6">
 
-<div class="card">
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-3xl font-bold text-gray-800">Dashboard Overview</h2>
+      <div class="text-sm text-gray-500">Live PPE Monitoring System</div>
+    </div>
 
-    <div class="site">🏗 {{ item.site }}</div>
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-    <p>⚠ Violation: <span class="badge">{{ item.violation }}</span></p>
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-gray-500">Total Workers</h3>
+        <p class="text-3xl font-bold text-blue-600">120</p>
+      </div>
 
-    <p>
-        📊 Risk:
-        {% if item.risk >= 50 %}
-            <span class="risk-high">{{ item.risk }}</span>
-        {% else %}
-            <span class="risk-low">{{ item.risk }}</span>
-        {% endif %}
-    </p>
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-gray-500">Violations</h3>
+        <p class="text-3xl font-bold text-red-500">5</p>
+      </div>
 
-    <p>⏰ {{ item.time }}</p>
+      <div class="bg-white p-6 rounded-xl shadow">
+        <h3 class="text-gray-500">Compliance Rate</h3>
+        <p class="text-3xl font-bold text-green-500">96%</p>
+      </div>
 
-</div>
+    </div>
 
-{% endfor %}
+    <!-- Live Section -->
+    <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
 
+      <!-- Camera Feed -->
+      <div class="bg-white p-5 rounded-xl shadow">
+        <h3 class="font-semibold mb-3">Live Camera Feed</h3>
+
+        <div class="bg-gray-900 text-white flex items-center justify-center h-64 rounded-lg">
+          Camera Feed Here
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="bg-white p-5 rounded-xl shadow">
+        <h3 class="font-semibold mb-3">Recent Alerts</h3>
+
+        <ul class="space-y-3 text-sm">
+          <li class="p-3 bg-red-100 text-red-700 rounded">
+            ⚠ No helmet detected - Worker #12
+          </li>
+          <li class="p-3 bg-yellow-100 text-yellow-700 rounded">
+            ⚠ Vest missing - Zone A
+          </li>
+          <li class="p-3 bg-green-100 text-green-700 rounded">
+            ✔ All PPE compliant - Zone B
+          </li>
+        </ul>
+      </div>
+
+    </div>
+
+  </main>
 </div>
 
 </body>
