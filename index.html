@@ -6,29 +6,40 @@
     <style>
         body {
             font-family: Arial;
-            background: #0f172a;
-            color: white;
             margin: 0;
-            padding: 20px;
+            background: #0b1220;
+            color: white;
         }
 
         h1 {
             text-align: center;
+            padding: 20px;
             color: #38bdf8;
         }
 
         .container {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 15px;
-            margin-top: 20px;
+            padding: 20px;
         }
 
         .card {
             background: #1e293b;
             padding: 15px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.03);
+        }
+
+        .site {
+            color: #38bdf8;
+            font-size: 18px;
+            font-weight: bold;
         }
 
         .risk-high {
@@ -39,36 +50,55 @@
         .risk-low {
             color: lightgreen;
         }
+
+        .badge {
+            padding: 5px 10px;
+            border-radius: 5px;
+            background: #334155;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .header-bar {
+            background: #111827;
+            padding: 10px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 
-<h1>🦺 PPE Monitoring Dashboard</h1>
+<div class="header-bar">
+    🦺 PPE Safety Monitoring System (Live Dashboard)
+</div>
+
+<h1>Real-Time Violations</h1>
 
 <div class="container">
 
-    {% for item in data %}
+{% for item in data %}
 
-    <div class="card">
+<div class="card">
 
-        <p><b>🏗 Site:</b> {{ item.site }}</p>
+    <div class="site">🏗 {{ item.site }}</div>
 
-        <p><b>⚠ Violation:</b> {{ item.violation }}</p>
+    <p>⚠ Violation: <span class="badge">{{ item.violation }}</span></p>
 
-        <p><b>📊 Risk:</b>
-            {% if item.risk >= 50 %}
-                <span class="risk-high">{{ item.risk }}</span>
-            {% else %}
-                <span class="risk-low">{{ item.risk }}</span>
-            {% endif %}
-        </p>
+    <p>
+        📊 Risk:
+        {% if item.risk >= 50 %}
+            <span class="risk-high">{{ item.risk }}</span>
+        {% else %}
+            <span class="risk-low">{{ item.risk }}</span>
+        {% endif %}
+    </p>
 
-        <p><b>⏰ Time:</b> {{ item.time }}</p>
+    <p>⏰ {{ item.time }}</p>
 
-    </div>
+</div>
 
-    {% endfor %}
+{% endfor %}
 
 </div>
 
