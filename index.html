@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PPE Monitoring Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        }
+
+        .risk-high {
+            color: red;
+            font-weight: bold;
+        }
+
+        .risk-low {
+            color: lightgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>🦺 PPE Monitoring Dashboard</h1>
+
+<div class="container">
+
+    {% for item in data %}
+
+    <div class="card">
+
+        <p><b>🏗 Site:</b> {{ item.site }}</p>
+
+        <p><b>⚠ Violation:</b> {{ item.violation }}</p>
+
+        <p><b>📊 Risk:</b>
+            {% if item.risk >= 50 %}
+                <span class="risk-high">{{ item.risk }}</span>
+            {% else %}
+                <span class="risk-low">{{ item.risk }}</span>
+            {% endif %}
+        </p>
+
+        <p><b>⏰ Time:</b> {{ item.time }}</p>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+</body>
+</html>

@@ -1,26 +1,30 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-class Data(BaseModel):
-    user_id: str
-    site: str
-    violation: str
-    risk: int
-    time: str
+# templates folder (your HTML files)
+templates = Jinja2Templates(directory="templates")
 
+# temporary storage (like database)
 data_store = []
 
-@app.get("/")
-def home():
-    return {"message": "PPE Cloud Running"}
+# ---------------- HOME PAGE ----------------
+@app.get("/", response_class=HTMLResponse)
+def home(request: Request):
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "data": data_store[::-1]   # latest first
+    })
 
+# ---------------- RECEIVE DATA FROM AI ----------------
 @app.post("/violation")
-def receive(data: Data):
+def add_violation(data: dict):
     data_store.append(data)
-    return {"status": "ok"}
+    return {"status": "received"}
 
+# ---------------- API CHECK ----------------
 @app.get("/data")
 def get_data():
     return data_store
